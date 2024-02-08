@@ -230,7 +230,7 @@ To make your website accessible via your domain name rather than the IP address,
 
 ![38](img/38.png)
 
-- Visit https://<domain name> to view your website.
+- Visit `https://<domain name>` to view your website.
 
 ![39](img/39.png)
 
