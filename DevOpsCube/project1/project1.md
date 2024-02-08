@@ -185,7 +185,7 @@ Your domain registrar's interface might look different, but they all follow a si
 
 - Go back to your domain registrar and select **Custom DNS** within the **NAMESERVERS** section.
 
-- ![29](img/29.png)
+![29](img/29.png)
 
 - Paste the values you copied from Route 53 into the appropriate fields, then click the **checkmark symbol** to save the changes.
 
