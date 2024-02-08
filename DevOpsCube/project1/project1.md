@@ -32,7 +32,7 @@
 
 ### Create An Ubuntu Server
 
-- Find and click on **EC2** in the AWS management console.
+- Locate and click on **EC2** within the AWS management console.
 
 ![1](img/1.png)
 
@@ -44,73 +44,72 @@
 
 ![3](img/3.png)
 
-- Click on the **Create new key pair** button to create a key pair for secure connection to your instance.
+- Click the **Create new key pair** button to generate a key pair for secure connection to your instance.
 
 ![4](img/4.png)
 
-- Set a **Key pair name** and click on **Create key pair**.
+- Enter a **Key pair name** and click on **Create key pair**.
 
 ![5](img/5.png)
 
-- Allow **SSH**, **HTTP**, **HTTPS** access and then click **Launch instance**.
+- Enable **SSH**, **HTTP**, and **HTTPS** access, then proceed to click **Launch instance**.
 
-![](img/6.png)
+![6](img/6.png)
 
 > [!NOTE]
-For security reasons it's better to allow SSH access only from yor IP, but for the sake of this documentation i allowed access from anywhere.
+For security reasons, it's recommended to restrict SSH access to your IP address only. However, for the purpose of this documentation, access has been granted from anywhere.
 
 - Click on the created instance.
 
-![](img/7.png)
+![7](img/7.png)
 
 - Click on the **Connect** button.
 
-![](img/8.png)
+![8](img/8.png)
 
-- Copy the command given under **`SSH client`** .
+- Copy the command provided under **`SSH client`**.
 
-![](img/9.png)
+![9](img/9.png)
 
-- Launch a terminal within the directory where your `.pem` file was downloaded, and then paste the command.
+- Open a terminal in the directory where your `.pem` file was downloaded, and then paste the command.
 
-![](img/10.png)
+![10](img/10.png)
 
 ---
 
 ### Create And Assign an Elastic IP
 
-- Return to your AWS console and click on **Elastic IPs** in **Network & Security**.
+- Navigate back to your AWS console and select **Elastic IPs** under **Network & Security**.
 
-![](img/11.png)
+![11](img/11.png)
 
 - Click on the **Allocate Elastic IP address** button.
 
-![](img/12.png)
+![12](img/12.png)
 
-- Leave the settings as is and click on **Allocate**.
+- Keep the settings unchanged and proceed to click **Allocate**.
 
-![](img/13.png)
+![13](img/13.png)
 
 - **Associate this Elastic IP address** with your running instance.
 
-![](img/14.png)
+![14](img/14.png)
 
-- Choose the instance you want to associate the elastic IP address with, and then click on **Associate**.
+- Select the instance you wish to associate with the elastic IP address, then click on **Associate**.
 
-![](img/15.png)
+![15](img/15.png)
 
-> [!NOTE]
-The IP for your instance has been changed to the elastic IP associated with it, so you'd have to SSH into your instance again. Return to the connection page of your instance and copy the new command.
+> [!NOTE] The IP address for your instance has been updated to the elastic IP associated with it. Therefore, you will need to SSH into your instance again. Return to the connection page of your instance and copy the new command.
 
-- Paste the **command** into your terminal and click on **yes** to connect.
+- Paste the **command** into your terminal and then press Enter. When prompted, type **"yes"** and press Enter to connect.
 
-![](img/16.png)
+![16](img/16.png)
 
 ---
 
 ### Install Nginx and Setup Your Website
 
-- Run the following commands.
+- Execute the following commands.
 
 `sudo apt update`
 
@@ -118,29 +117,126 @@ The IP for your instance has been changed to the elastic IP associated with it, 
 
 `sudo apt install nginx`
 
-- Start your Nginx server by running the `sudo systemctl start nginx` command, enable it to start on boot by running the `sudo systemctl enable nginx` command, and then confirm if it's running, using the `sudo systemctl status nginx` command.
+- Start your Nginx server by running the `sudo systemctl start nginx` command, enable it to start on boot by executing `sudo systemctl enable nginx`, and then confirm if it's running with the `sudo systemctl status nginx` command.
 
-![](img/17.png)
+![17](img/17.png)
 
-- Visit your instances IP address to view the default Nginx startup page.
+- Visit your instances IP address in a web browser to view the default Nginx startup page.
 
-![](img/18.png)
+![18](img/18.png)
 
-- Download your website template from your preferred website.
+- Download your website template from your preferred website by navigating to the website, locating the template you want, and obtaining the download URL for the website.
 
-![](img/19.png)
+![19](img/19.png)
 
-> [!NOTE]
-I downloaded my template from **tooplate.com** using the `sudo curl -o /var/www/html/2137_barista_cafe.zip https://www.tooplate.com/zip-templates/2137_barista_cafe.zip` command.
-The `curl` command is a command-line tool for making HTTP requests. It is used here to download a file from a URL.
-The `-o` option specifies the output file or location. In this case, it indicates that the downloaded file should be saved as **"2137_barista_cafe.zip"** in the **"/var/www/html/"** directory.
-And `https://www.tooplate.com/zip-templates/2137_barista_cafe.zip` is the URL from which the file is being downloaded. The content located at this URL will be fetched by curl.
+> [!NOTE] I obtained my template from **tooplate.com** by executing the command `sudo curl -o /var/www/html/2137_barista_cafe.zip https://www.tooplate.com/zip-templates/2137_barista_cafe.zip`.
+The `curl` command is a utility for making HTTP requests via the command line. Here, it's utilized to retrieve a file from a specified URL.
+The `-o` flag designates the output file or destination. In this instance, it signifies that the downloaded file, named **"2137_barista_cafe.zip"**, should be stored in the **"/var/www/html/"** directory.
+The URL `https://www.tooplate.com/zip-templates/2137_barista_cafe.zip` is the source from which the file is being downloaded. Curl will retrieve the content located at this URL.
 
-- Unzip your website content.
+- Unzip the contents of your website.
 
-![](img/20.png)
+![20](img/20.png)
 
-- Visit your Elastic IP address to confirm that your website is running.
+- Update your nginx configuration by running the command `sudo nano /etc/nginx/sites-available/default`. Then, edit the `root` directive within your server block to point to the directory where your downloaded website content is stored.
 
-![](img/21.png)
+- Open a web browser and go to your Elastic IP address to confirm that your website is working as expected.
 
+![21](img/21.png)
+
+---
+
+### Create An A Record
+
+To make your website accessible via your domain name rather than the IP address, you'll need to set up a DNS record. I did this by buying my domain from Namecheap and then moving hosting to AWS Route 53, where I set up an A record.
+
+> [!NOTE] Your domain registrar's interface might look different, but they all follow a similar basic layout.
+
+- On the website click on **Domain List**.
+
+![22](img/22.png)
+
+- Click on the **Manage** button.
+
+![23](img/23.png)
+
+- Go back to your AWS console, search for **Route 53**, and then choose **Route 53** from the list of services shown.
+
+![24](img/24.png)
+
+- Click on **Get started**.
+
+![25](img/25.png)
+
+- Select **Create hosted zones**.
+
+![26](img/26.png)
+
+- Enter your **Domain name**, choose **Public hosted zone** and then click on **Create hosted zone**.
+
+![27](img/27.png)
+
+- Select the **created hosted zone** and copy the assigned **Values**.
+
+![28](img/28.png)
+
+- Go back to your domain registrar and select **Custom DNS** within the **NAMESERVERS** section.
+
+- ![29](img/29.png)
+
+- Paste the values you copied from Route 53 into the appropriate fields, then click the **checkmark symbol** to save the changes.
+
+![30](img/30.png)
+
+- Head back to your AWS console and click on **Create record**.
+
+![31](img/31.png)
+
+- Paste your Elastic IP address and then click on **Create records**.
+
+![32](img/32.png)
+
+- Your A record has been successfully created.
+
+![33](img/33.png)
+
+- Open your terminal and run `sudo nano /etc/nginx/sites-available/default` to edit your settings. Enter the name of your domain and then save your settings.
+
+![34](img/34.png)
+
+- Restart your nginx server by running the `sudo systemctl restart nginx` command.
+
+- Go to your domain name in a web browser to verify that your website is accessible.
+
+![35](img/35.png)
+
+> [!NOTE] You may notice the sign that says **Not secure**. Next, you'll use certbot to obtain the SSL certificate necessary to enable HTTPS on your site.
+
+---
+
+### Install certbot and Request For an SSL/TLS Certificate
+
+- Install certbot by executing the following commands:
+`sudo apt update`
+`sudo apt install certbot`
+
+![36](img/36.png)
+
+- Execute the `sudo certbot --nginx` command to request your certificate. Follow the instructions provided by certbot and select the domain name for which you would like to activate HTTPS.
+
+![37](img/37.png)
+
+- Verify the website's SSL using the OpenSSL utility with the command: `openssl s_client -connect jaykaneki.cloud:443`
+
+![38](img/38.png)
+
+- Visit https://<domain name> to view your website.
+
+![39](img/39.png)
+
+---
+---
+
+#### The End Of Project 1
+
+If you encounter any errors or need assistance at any stage of the project, feel free to contact me via [**LinkedIn**](https://www.linkedin.com/in/jamillah-bello/). I'm here to help.
