@@ -99,7 +99,8 @@ For security reasons, it's recommended to restrict SSH access to your IP address
 
 ![15](img/15.png)
 
-> [!NOTE] The IP address for your instance has been updated to the elastic IP associated with it. Therefore, you will need to SSH into your instance again. Return to the connection page of your instance and copy the new command.
+> [!NOTE] 
+The IP address for your instance has been updated to the elastic IP associated with it. Therefore, you will need to SSH into your instance again. Return to the connection page of your instance and copy the new command.
 
 - Paste the **command** into your terminal and then press Enter. When prompted, type **"yes"** and press Enter to connect.
 
@@ -129,7 +130,8 @@ For security reasons, it's recommended to restrict SSH access to your IP address
 
 ![19](img/19.png)
 
-> [!NOTE] I obtained my template from **tooplate.com** by executing the command `sudo curl -o /var/www/html/2137_barista_cafe.zip https://www.tooplate.com/zip-templates/2137_barista_cafe.zip`.
+> [!NOTE] 
+I obtained my template from **tooplate.com** by executing the command `sudo curl -o /var/www/html/2137_barista_cafe.zip https://www.tooplate.com/zip-templates/2137_barista_cafe.zip`.
 The `curl` command is a utility for making HTTP requests via the command line. Here, it's utilized to retrieve a file from a specified URL.
 The `-o` flag designates the output file or destination. In this instance, it signifies that the downloaded file, named **"2137_barista_cafe.zip"**, should be stored in the **"/var/www/html/"** directory.
 The URL `https://www.tooplate.com/zip-templates/2137_barista_cafe.zip` is the source from which the file is being downloaded. Curl will retrieve the content located at this URL.
@@ -150,7 +152,8 @@ The URL `https://www.tooplate.com/zip-templates/2137_barista_cafe.zip` is the so
 
 To make your website accessible via your domain name rather than the IP address, you'll need to set up a DNS record. I did this by buying my domain from Namecheap and then moving hosting to AWS Route 53, where I set up an A record.
 
-> [!NOTE] Your domain registrar's interface might look different, but they all follow a similar basic layout.
+> [!NOTE] 
+Your domain registrar's interface might look different, but they all follow a similar basic layout.
 
 - On the website click on **Domain List**.
 
@@ -182,7 +185,7 @@ To make your website accessible via your domain name rather than the IP address,
 
 - Go back to your domain registrar and select **Custom DNS** within the **NAMESERVERS** section.
 
-- ![29](img/29.png)
+![29](img/29.png)
 
 - Paste the values you copied from Route 53 into the appropriate fields, then click the **checkmark symbol** to save the changes.
 
@@ -210,7 +213,8 @@ To make your website accessible via your domain name rather than the IP address,
 
 ![35](img/35.png)
 
-> [!NOTE] You may notice the sign that says **Not secure**. Next, you'll use certbot to obtain the SSL certificate necessary to enable HTTPS on your site.
+> [!NOTE] 
+You may notice the sign that says **Not secure**. Next, you'll use certbot to obtain the SSL certificate necessary to enable HTTPS on your site.
 
 ---
 
